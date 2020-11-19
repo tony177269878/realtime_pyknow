@@ -121,6 +121,12 @@ class FeatureCheck(Check,
     @get_check_function.register(L)
     def _(pce, what=None):
         def equal_literal(actual, expected):
+            expected_value = expected.value
+            if expected.value.startswith('env|'):
+                current_data_list = expected.value.split('|')
+                expected_value = os.environ.get(current_data_list[1])
+                if len(current_data_list) == 3:
+                    expected_value = str(int(expected_value) - int(current_data_list[2]))
             if expected.value == actual:
                 if expected.__bind__ is None:
                     return True

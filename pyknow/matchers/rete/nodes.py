@@ -253,6 +253,8 @@ class ConflictSetNode(mixins.AnyChild,
         self.added = set()
         self.removed = set()
 
+        self.added_wrapped_function = set()
+
         super().__init__()
 
     def _reset(self):
@@ -275,7 +277,9 @@ class ConflictSetNode(mixins.AnyChild,
                 if activation in self.removed:
                     self.removed.remove(activation)
                 else:
-                    self.added.add(activation)
+                    if activation.rule._wrapped not in self.added_wrapped_function:
+                        self.added.add(activation)
+                        self.added_wrapped_function.add(activation.rule._wrapped)
         else:
             try:
                 self.memory.remove(info)
