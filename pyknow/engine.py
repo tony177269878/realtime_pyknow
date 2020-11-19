@@ -11,7 +11,7 @@ from pyknow import abstract
 
 from pyknow.agenda import Agenda
 from pyknow.fact import InitialFact
-from pyknow.factlist import FactList
+from pyknow.factlist import FactList,Fact
 from pyknow.rule import Rule
 from pyknow.deffacts import DefFacts
 from pyknow import watchers
