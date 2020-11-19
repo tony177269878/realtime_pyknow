@@ -42,10 +42,13 @@ class FactList(OrderedDict):
 
     @staticmethod
     def _get_fact_id(fact):
-        return frozenset([fact.__class__]
-                         + [(k, v)
-                            for k, v in fact.items()
-                            if not fact.is_special(k)])
+        if 'level' in fact.keys() and 'id' in fact.keys():
+            return f"{fact['level']}_{fact['id']}"
+        else:
+            return frozenset([fact.__class__]
+                             + [(k, v)
+                                for k, v in fact.items()
+                                if not fact.is_special(k)])
 
     def declare(self, fact):
         """
