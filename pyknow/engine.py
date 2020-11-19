@@ -82,6 +82,28 @@ class KnowledgeEngine:
 
         return self.declare(newfact)
 
+    def upsert(self, declared_fact, **modifiers):
+        """
+        Modifies a fact.
+        Facts are inmutable in Clips, thus, as documented in clips
+        reference manual, this retracts a fact and then re-declares it
+        `modifiers` must be a Mapping object containing keys and values
+        to be changed.
+        To allow modifying positional facts, the user can pass a string
+        containing the symbol "_" followed by the numeric index
+        (starting with 0). Ex::
+            >>> ke.modify(my_fact, _0="hello", _1="world", other_key="!")
+        """
+        try:
+            self.retract(declared_fact)
+
+            newfact = declared_fact.copy()
+            newfact.update(dict(self._get_real_modifiers(**modifiers)))
+
+            return self.declare(newfact)
+        except:
+            self.declare(Fact(dict(self._get_real_modifiers(**modifiers))))
+
     def duplicate(self, template_fact, **modifiers):
         """Create a new fact from an existing one."""
 
