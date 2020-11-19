@@ -80,6 +80,7 @@ class FactList(OrderedDict):
             # Assign the ID to the fact
             idx = self.last_index
             fact.__factid__ = idx
+            self.fact_id_2_idx_map[fact_id] = idx
 
             # Insert the fact in the factlist
             self[idx] = fact
