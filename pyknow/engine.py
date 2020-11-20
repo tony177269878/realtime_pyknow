@@ -136,6 +136,7 @@ class KnowledgeEngine:
         activation = None
         execution = 0
         while steps > 0 and self.running:
+            self.running = False
 
             added, removed = self.get_activations()
             print(f"added : {added}")
