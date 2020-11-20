@@ -102,22 +102,22 @@ class FactList(OrderedDict):
 
             watchers.FACTS.info(" ==> %s: %r", fact, fact)
             return fact
-        elif fact_id in self.reference_counter:
-            old_fact = self[self.fact_id_2_idx_map[fact_id]]
-            if 'level' in old_fact.keys() and 'id' in old_fact.keys():
-                new_fact = old_fact.copy()
-                new_fact.update(fact)
-                new_fact.__factid__ = old_fact.__factid__
-
-                self[self.fact_id_2_idx_map[fact_id]] = new_fact
-
-                self.added.append(new_fact)
-
-                old_fact = None
-
-                return old_fact
-            else:
-                return None
+        # elif fact_id in self.reference_counter:
+        #     old_fact = self[self.fact_id_2_idx_map[fact_id]]
+        #     if 'level' in old_fact.keys() and 'id' in old_fact.keys():
+        #         new_fact = old_fact.copy()
+        #         new_fact.update(fact)
+        #         new_fact.__factid__ = old_fact.__factid__
+        #
+        #         self[self.fact_id_2_idx_map[fact_id]] = new_fact
+        #
+        #         self.added.append(new_fact)
+        #
+        #         old_fact = None
+        #
+        #         return old_fact
+        #     else:
+        #         return None
         else:
             return None
 
