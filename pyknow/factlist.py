@@ -110,6 +110,8 @@ class FactList(OrderedDict):
 
             self[self.fact_id_2_idx_map[fact_id]] = new_fact
 
+            self.added.append(new_fact)
+
             old_fact = None
 
             return old_fact
