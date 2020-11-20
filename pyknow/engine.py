@@ -149,7 +149,7 @@ class KnowledgeEngine:
             added, removed = self.get_activations()
             self.strategy.update_agenda(self.agenda, added, removed)
 
-    def run(self, steps=float('inf')):
+    def run(self, steps=1):
         """
         Execute agenda activations
         """
