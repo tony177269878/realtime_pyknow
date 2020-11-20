@@ -102,13 +102,6 @@ class FactList(OrderedDict):
 
             watchers.FACTS.info(" ==> %s: %r", fact, fact)
             return fact
-        elif fact_id in self.reference_counter:
-            old_fact = self[self.fact_id_2_idx_map[fact_id]].copy()
-            old_fact.update(fact)
-
-            self[self.fact_id_2_idx_map[fact_id]] = old_fact
-
-            return old_fact
         else:
             return None
 
