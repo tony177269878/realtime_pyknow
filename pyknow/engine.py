@@ -138,6 +138,7 @@ class KnowledgeEngine:
         while steps > 0 and self.running:
 
             added, removed = self.get_activations()
+            print(f"added : {added}")
             self.strategy.update_agenda(self.agenda, added, removed)
 
             if watchers.worth('AGENDA', 'DEBUG'):  # pragma: no cover
