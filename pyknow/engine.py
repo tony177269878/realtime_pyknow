@@ -151,6 +151,7 @@ class KnowledgeEngine:
                         ", ".join(str(f) for f in act.facts))
 
             activation = self.agenda.get_next()
+            print(f"activation : {activation}")
 
             if activation is None:
                 break
