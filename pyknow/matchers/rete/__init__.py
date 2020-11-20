@@ -64,7 +64,7 @@ class ReteMatcher(Matcher):
             added.extend(c_added)
             removed.extend(c_removed)
             csn.added_wrapped_function.clear()
-            csn.added.clear()
+            # csn.added.clear()
 
         return (added, removed)
 
