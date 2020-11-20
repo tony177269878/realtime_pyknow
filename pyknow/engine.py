@@ -175,7 +175,7 @@ class KnowledgeEngine:
     def halt(self):
         self.running = False
 
-    def partial_reset(self):
+    def partial_reset(self,**kwargs):
         self.agenda = Agenda()
         # self.facts = FactList()
 
