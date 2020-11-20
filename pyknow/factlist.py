@@ -171,8 +171,8 @@ class FactList(OrderedDict):
         Return a tuple with the removed and added facts since last run.
         """
         try:
-            return self.values(),self.removed
-            # return self.added, self.removed
+            # return self.values(),self.removed
+            return self.added, self.removed
         finally:
             self.added = list()
             self.removed = list()

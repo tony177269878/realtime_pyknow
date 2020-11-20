@@ -285,6 +285,8 @@ class ConflictSetNode(mixins.AnyChild,
                 self.memory.remove(info)
             except ValueError:
                 pass
+            except KeyError:
+                pass
             else:
                 if activation in self.added:
                     self.added.remove(activation)
