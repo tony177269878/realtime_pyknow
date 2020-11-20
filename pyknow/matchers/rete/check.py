@@ -128,7 +128,7 @@ class FeatureCheck(Check,
                 expected_value = os.environ.get(current_data_list[1])
                 if len(current_data_list) == 3:
                     expected_value = str(int(expected_value) - int(current_data_list[2]))
-            if expected.value == actual:
+            if expected_value == actual:
                 if expected.__bind__ is None:
                     return True
                 else:
