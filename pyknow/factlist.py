@@ -52,6 +52,16 @@ class FactList(OrderedDict):
                                 for k, v in fact.items()
                                 if not fact.is_special(k)])
 
+    def get_fact_from_partial(self,fact):
+        if 'level' in fact.keys() and 'id' in fact.keys():
+            key = f"{fact['level']}_{fact['id']}"
+            if key in self.fact_id_2_idx_map.keys() and self.fact_id_2_idx_map[key] in self.keys():
+                return self[self.fact_id_2_idx_map[key]]
+            else:
+                return None
+        else:
+            return None
+
     def declare(self, fact):
         """
         Assert (in clips terminology) a fact.
@@ -135,6 +145,7 @@ class FactList(OrderedDict):
         self.removed.append(fact)
 
         del self[idx]
+        del self.fact_id_2_idx_map[fact_id]
 
         return idx
 
