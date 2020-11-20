@@ -2,6 +2,7 @@ from collections import namedtuple
 from collections.abc import Mapping
 from functools import singledispatch
 import dis
+import os
 import inspect
 
 from pyknow.fieldconstraint import FieldConstraint
