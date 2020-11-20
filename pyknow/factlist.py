@@ -44,13 +44,13 @@ class FactList(OrderedDict):
 
     @staticmethod
     def _get_fact_id(fact):
-        # if 'level' in fact.keys() and 'id' in fact.keys():
-        #     return f"{fact['level']}_{fact['id']}"
-        # else:
-        return frozenset([fact.__class__]
-                         + [(k, v)
-                            for k, v in fact.items()
-                            if not fact.is_special(k)])
+        if 'level' in fact.keys() and 'id' in fact.keys():
+            return f"{fact['level']}_{fact['id']}"
+        else:
+            return frozenset([fact.__class__]
+                             + [(k, v)
+                                for k, v in fact.items()
+                                if not fact.is_special(k)])
 
     def get_fact_from_partial(self,fact):
         if 'level' in fact.keys() and 'id' in fact.keys():
@@ -102,22 +102,29 @@ class FactList(OrderedDict):
 
             watchers.FACTS.info(" ==> %s: %r", fact, fact)
             return fact
-        # elif fact_id in self.reference_counter:
-        #     old_fact = self[self.fact_id_2_idx_map[fact_id]]
-        #     if 'level' in old_fact.keys() and 'id' in old_fact.keys():
-        #         new_fact = old_fact.copy()
-        #         new_fact.update(fact)
-        #         new_fact.__factid__ = old_fact.__factid__
-        #
-        #         self[self.fact_id_2_idx_map[fact_id]] = new_fact
-        #
-        #         self.added.append(new_fact)
-        #
-        #         old_fact = None
-        #
-        #         return old_fact
-        #     else:
-        #         return None
+        elif fact_id in self.reference_counter:
+            old_fact = self[self.fact_id_2_idx_map[fact_id]]
+            if 'level' in old_fact.keys() and 'id' in old_fact.keys():
+                self.removed.append(old_fact)
+
+                del self[self.fact_id_2_idx_map[fact_id]]
+                del self.fact_id_2_idx_map[fact_id]
+
+                idx = self.last_index
+                fact.__factid__ = idx
+                self.fact_id_2_idx_map[fact_id] = idx
+
+                # Insert the fact in the factlist
+                self[idx] = fact
+
+                self.last_index += 1
+
+                self.added.append(fact)
+
+                watchers.FACTS.info(" ==> %s: %r", fact, fact)
+                return fact
+            else:
+                return None
         else:
             return None
 
