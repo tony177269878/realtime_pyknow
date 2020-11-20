@@ -175,6 +175,30 @@ class KnowledgeEngine:
     def halt(self):
         self.running = False
 
+    def partial_reset(self):
+        self.agenda = Agenda()
+        # self.facts = FactList()
+
+        self.matcher.reset()
+
+        deffacts = []
+        for deffact in self.get_deffacts():
+            signature = inspect.signature(deffact)
+            if not any(p.kind == inspect.Parameter.VAR_KEYWORD
+                       for p in signature.parameters.values()):
+                # There is not **kwargs defined. Pass only the defined
+                # names.
+                args = set(signature.parameters.keys())
+                deffacts.append(
+                    deffact(**{k: v for k, v in kwargs.items()
+                               if k in args}))
+            else:
+                deffacts.append(deffact(**kwargs))
+
+        # Declare all facts yielded by deffacts
+        self.__declare(*chain.from_iterable(deffacts))
+
+        self.running = False
     def reset(self, **kwargs):
         """
         Performs a reset as per CLIPS behaviour (resets the
