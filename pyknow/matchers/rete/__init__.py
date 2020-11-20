@@ -61,7 +61,6 @@ class ReteMatcher(Matcher):
 
         for csn in self._get_conflict_set_nodes():
             c_added, c_removed = csn.get_activations()
-            print(f"c_added : {c_added} | c_removed : {c_removed}")
             added.extend(c_added)
             removed.extend(c_removed)
             csn.added_wrapped_function.clear()
